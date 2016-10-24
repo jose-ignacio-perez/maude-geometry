@@ -57,7 +57,7 @@ fmod GEO2D is
 	eq se-cortan(r1 , r2) = not (ecu-recta-m(r1) == ecu-recta-m(r2)) .
 
 	op son-iguales : Recta Recta -> Bool .
-	*** comprueba si dos rectas son iguales a partir de n y m, pendiente y desplazamiento, 
+	*** comprueba si dos rectas son iguales a partir de m y n, pendiente y desplazamiento, 
 	*** pues una recta puede construirse mediantes infinitos pares de puntos.
 	eq son-iguales(r1 , r2) = (ecu-recta-m(r1) == ecu-recta-m(r2)) and (ecu-recta-n(r1) == ecu-recta-n(r2))	.
 
@@ -78,7 +78,9 @@ fmod GEO2D is
 	op pto-corte-y : Recta Recta -> Float .
 	*** Devuelve la coordenada Y del punto de corte de las dos rectas.
 	ceq pto-corte-y(r1 , r2) = ((ecu-recta-m(r1) * ecu-recta-n(r2)) - (ecu-recta-m(r2) * ecu-recta-n(r1))) / (ecu-recta-m(r1) - (ecu-recta-m(r2) * ecu-recta-m(r1)))
-	if not vertical(r1) and not vertical(r2) .
+	if not vertical(r1) and not vertical(r2) and not (ecu-recta-m(r1) - (ecu-recta-m(r2) * ecu-recta-m(r1)) == 0.0) .
+	ceq pto-corte-y(r1 , r2) = pto-corte-y(r2 , r1)
+	if not vertical(r1) and not vertical(r2) and (ecu-recta-m(r1) - (ecu-recta-m(r2) * ecu-recta-m(r1)) == 0.0) .
 	ceq pto-corte-y(r1 , r2) = ecu-recta-n(r1)
 	if vertical(r1) .
 	ceq pto-corte-y(r1 , r2) = ecu-recta-n(r2)
