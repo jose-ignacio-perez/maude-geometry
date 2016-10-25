@@ -133,9 +133,12 @@ fmod GEO2D is
 	*** Devuelve el radio de la circunferencia
 	eq radio-circunferencia(c(p1 , z11)) = z11 .
 
-	op se-cortan : Circunferencia Circunferencia -> Bool .
+	op se-cortan-c-c : Circunferencia Circunferencia -> Bool .
 	*** Comprueba si dos circunferencias se cortan en base a la distancia de los centros.
-	eq se-cortan(c1, c2) = distancia(centro-circunferencia(c1) , centro-circunferencia(c2)) <= (radio-circunferencia(c1) + radio-circunferencia(c2)) . 
+	ceq se-cortan-c-c(c1, c2) = distancia(centro-circunferencia(c1) , centro-circunferencia(c2)) <= (radio-circunferencia(c1) + radio-circunferencia(c2))
+	if not (centro-circunferencia(c1) == centro-circunferencia(c2)) . 
+	ceq se-cortan-c-c(c1, c2) = radio-circunferencia(c1) == radio-circunferencia(c2)
+	if (centro-circunferencia(c1) == centro-circunferencia(c2)) .
 
 	op se-cortan-r-c : Recta Circunferencia -> Bool .
 	*** Puede fallar falta comprobar
@@ -204,10 +207,7 @@ fmod GEO2D is
 
 	op v-perpendiculares : Vector Vector -> Bool .
 	***Comprueba si dos vectores son perpendiculares
-	ceq v-perpendiculares(v1 , v2) = true 
-	if v-prod-escalar(v1 , v2) == 0.0 .
-	ceq v-perpendiculares(v1 , v2) = false 
-	if not (v-prod-escalar(v1 , v2) == 0.0) .
+	eq v-perpendiculares(v1 , v2) = (v-prod-escalar(v1 , v2) == 0.0) .
 
 	op r-perpendiculares : Recta Recta -> Bool .
 	***Comprueba si dos rectas son perpendiculares
@@ -215,6 +215,20 @@ fmod GEO2D is
 
 	op v-modulo : Vector -> Float .
 	***Calcula el modulo de un vector
-	eq v-modulo(v1) = v-prod-escalar(v1 , v1) ^ (1.0 / 2.0) .
-
+	eq v-modulo(v1) = v-prod-escalar(v1 , v1) ^ (0.5) .
 endfm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
